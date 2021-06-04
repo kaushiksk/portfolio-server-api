@@ -11,3 +11,11 @@ def overview():
     user_info = _db.user_info.find_one({}, projection={"_id": False})
     data = {"user_info": user_info, "schemes": [s for s in _schemes]}
     return data, 200
+
+
+@bp.route("/goals/", methods=["GET"])
+def goals():
+    _db = get_db()
+    user_goals = _db.user_info.find_one(projection={"goals": 1, "_id": 0})
+    data = {"user_goals": user_goals}
+    return data, 200
