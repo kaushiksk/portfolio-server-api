@@ -17,7 +17,8 @@ db = mongo.db.with_options(codec_options=get_codec_options())
 @app.route("/portfolio/overview/")
 def index():
     _schemes = db.schemes.find(projection={"_id": False, "transactions": False})
-    return jsonify(status=True, data=[s for s in _schemes])
+    data = {"schemes": [s for s in _schemes]}
+    return jsonify(data), 200
 
 
 if __name__ == "__main__":
