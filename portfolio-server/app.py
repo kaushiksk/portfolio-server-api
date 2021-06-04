@@ -7,8 +7,10 @@ def create_app():
 
     from . import db
     from . import portfolio
+    from . import scheme
 
     db.init_app(app)
     app.register_blueprint(portfolio.bp)
+    app.register_blueprint(scheme.bp)
 
     return app
