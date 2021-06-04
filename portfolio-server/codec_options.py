@@ -24,8 +24,7 @@ class DecimalCodec(TypeCodec):
         return str(value)
 
 
-def get_codec_options():
+def get_type_registry():
     decimal_codec = DecimalCodec()
     type_registry = TypeRegistry([decimal_codec])
-    codec_options = CodecOptions(type_registry=type_registry)
-    return codec_options
+    return type_registry
