@@ -8,5 +8,6 @@ bp = Blueprint("portfolio", __name__, url_prefix="/portfolio")
 def overview():
     _db = get_db()
     _schemes = _db.schemes.find(projection={"_id": False, "transactions": False})
-    data = {"schemes": [s for s in _schemes]}
+    user_info = _db.user_info.find_one({}, projection={"_id": False})
+    data = {"user_info": user_info, "schemes": [s for s in _schemes]}
     return data, 200
