@@ -41,14 +41,20 @@ def removegoal():
     if goal is not None:
         _db = get_db()
 
-        schemes_with_goal = _db.schemes.count_documents({"goal": goal})
+        is_valid_goal = _db.user_info.count_documents({"goals": goal})
 
-        if schemes_with_goal == 0:
-            _db.user_info.update_one({"_id": 1}, {"$pull": {"goals": goal}})
-            return {"isSuccess": True}, 200
+        if is_valid_goal:
+            schemes_with_goal = _db.schemes.count_documents({"goal": goal})
 
-        return {
-            "error": "Cannot remove goal. There are schemes which have this goal assigned."
-        }, 500
+            if schemes_with_goal == 0:
+                d = _db.user_info.update_one({"_id": 1}, {"$pull": {"goals": goal}})
+                print(d.modified_count)
+                return {"isSuccess": True}, 200
+
+            return {
+                "error": "Cannot remove goal. There are schemes which have this goal assigned."
+            }, 500
+
+        return {"error": "Cannot remove goal. Goal does not exist."}, 500
 
     return {"error": "Json payload needs key 'goal'"}, 400
