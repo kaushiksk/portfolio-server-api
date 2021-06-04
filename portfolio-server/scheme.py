@@ -28,6 +28,6 @@ def assigngoal(amfi_id):
 
         return {
             "error": "Provided goal is not part of user's goals. Add it first."
-        }, 422
+        }, 400
 
     return {"error": "Json payload needs key 'goal'"}, 400
