@@ -40,6 +40,7 @@ def init_db_command():
     db.schemes.drop()
 
     data["user_info"]["valuation"] = data["valuation"]
+    data["user_info"]["_id"] = 1
 
     # TODO: Allow user to import goals
     data["user_info"]["goals"] = ["MISC"]
