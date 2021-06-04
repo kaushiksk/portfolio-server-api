@@ -26,7 +26,7 @@ def init_app(app):
 def init_db_command():
     if not os.path.exists(CAS_FILE_PATH):
         print(
-            "File not found. Make sure you saved your CAS file as cas-portfolio.pdf in current directory"
+            "File not found. Make sure you saved your CAS file as cas-portfolio.pdf in directory root"
         )
         sys.exit(0)
 

@@ -6,11 +6,9 @@ def create_app():
     app.config["MONGO_URI"] = "mongodb://localhost:27017/portfolio"
 
     from . import db
-
-    db.init_app(app)
-
     from . import portfolio
 
+    db.init_app(app)
     app.register_blueprint(portfolio.bp)
 
     return app
