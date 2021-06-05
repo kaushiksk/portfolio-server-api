@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask
 
 
 def create_app():
@@ -7,10 +7,10 @@ def create_app():
 
     from . import db
     from . import portfolio
-    from . import scheme
+    from . import schemes
 
     db.init_app(app)
     app.register_blueprint(portfolio.bp)
-    app.register_blueprint(scheme.bp)
+    app.register_blueprint(schemes.bp)
 
     return app

@@ -1,10 +1,19 @@
 from flask import Blueprint, request
 from .db import get_db
 
-bp = Blueprint("scheme", __name__, url_prefix="/scheme")
+bp = Blueprint("schemes", __name__, url_prefix="/schemes")
 
 
-@bp.route("/<amfi_id>/details/", methods=["GET"])
+@bp.route("/overview/", methods=["GET"])
+def overview():
+    _db = get_db()
+    _schemes = _db.schemes.find(projection={"_id": False, "transactions": False})
+    user_info = _db.user_info.find_one({})
+    data = {"user_info": user_info, "schemes": [s for s in _schemes]}
+    return data, 200
+
+
+@bp.route("/<amfi_id>", methods=["GET"])
 def scheme_details(amfi_id):
     _db = get_db()
     data = _db.schemes.find_one_or_404({"amfi": amfi_id}, projection={"_id": False})
