@@ -13,7 +13,7 @@ def overview():
     return data, 200
 
 
-@bp.route("/<amfi_id>/details/", methods=["GET"])
+@bp.route("/<amfi_id>", methods=["GET"])
 def scheme_details(amfi_id):
     _db = get_db()
     data = _db.schemes.find_one_or_404({"amfi": amfi_id}, projection={"_id": False})
