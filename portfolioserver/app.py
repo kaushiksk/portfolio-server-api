@@ -1,9 +1,10 @@
 from flask import Flask
+from .configs import DevelopmentConfig
 
 
 def create_app():
     app = Flask(__name__)
-    app.config["MONGO_URI"] = "mongodb://localhost:27017/portfolio"
+    app.config.from_object(DevelopmentConfig())
 
     from . import db
     from . import portfolio
