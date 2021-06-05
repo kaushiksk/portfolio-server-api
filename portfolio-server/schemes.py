@@ -1,7 +1,7 @@
 from flask import Blueprint, request
 from .db import get_db
 
-bp = Blueprint("schemes", __name__, url_prefix="/scheme")
+bp = Blueprint("schemes", __name__, url_prefix="/schemes")
 
 
 @bp.route("/overview/", methods=["GET"])
