@@ -1,10 +1,12 @@
 from flask import Flask
 from .configs import DevelopmentConfig
 
+defaultConfig = DevelopmentConfig()
 
-def create_app():
+
+def create_app(config=defaultConfig):
     app = Flask(__name__)
-    app.config.from_object(DevelopmentConfig())
+    app.config.from_object(config)
 
     from . import db
     from . import portfolio
