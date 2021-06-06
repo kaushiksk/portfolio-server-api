@@ -23,5 +23,16 @@ def init_db_command():
     init_db_from_cas_file(CAS_FILE_PATH)
 
 
+@cli.command("run")
+@click.option("--host", default="127.0.0.1", help="Bind socket to this host.")
+@click.option("--port", default=8000, help="Port to run the server on.")
+def runserver(host, port):
+    os.system(
+        "uvicorn --factory portfolioserver:create_app --host {0} --port {1}".format(
+            host, port
+        )
+    )
+
+
 if __name__ == "__main__":
     cli()
