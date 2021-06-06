@@ -28,6 +28,7 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Generate Report
       run: |
+        sudo locale-gen en_IN.UTF-8
         export LC_ALL="en_IN"
         sudo dpkg-reconfigure locales
         git submodule update --init --recursive
