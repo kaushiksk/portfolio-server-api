@@ -18,7 +18,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ['3.8']
+        python-version: ['3.9']
+        mongodb-version: ['4.0.8']
 
     steps:
     - uses: actions/checkout@v2
@@ -26,7 +27,11 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.python-version }}
-    - name: Generate Report
+    - name: Start MongoDB v${{ matrix.mongodb-version }}
+      uses: supercharge/mongodb-github-action@1.2.0
+      with:
+        mongodb-version: ${{ matrix.mongodb-version }}
+    - name: Install Dependencies
       run: |
         sudo locale-gen en_IN.UTF-8
         export LC_ALL="en_IN"
@@ -34,6 +39,8 @@ jobs:
         git submodule update --init --recursive
         pip install -r requirements.txt
         pip install pytest coverage
+    - name: Generate Report
+      run: |
         coverage run --source pyportfolio -m pytest
     - name: Upload Coverage to Codecov
       uses: codecov/codecov-action@v1
