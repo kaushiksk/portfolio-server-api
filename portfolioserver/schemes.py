@@ -9,13 +9,13 @@ def overview(_db=Depends(get_db)):
     _schemes = _db.schemes.find(projection={"_id": False, "transactions": False})
     user_info = _db.user_info.find_one({})
     data = {"user_info": user_info, "schemes": [s for s in _schemes]}
-    return data, 200
+    return data
 
 
 @router.get("/{amfi_id}")
 def scheme_details(amfi_id: str, _db=Depends(get_db)):
-    data = _db.schemes.find_one_or_404({"amfi": amfi_id}, projection={"_id": False})
-    return data, 200
+    data = _db.schemes.find_one({"amfi": amfi_id}, projection={"_id": False})
+    return data
 
 
 @router.post("/{amfi_id}/assigngoal")
