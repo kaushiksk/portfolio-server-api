@@ -6,9 +6,10 @@
 Self hosted Web API to query your portfolio data
 
 ## Pre-requisites
- - Local installation of mongodb. Run `docker-compose up -d` to create one using hte docker config provided.
+ - Local installation of mongodb. 
+   - Run `docker-compose up -d` to create one using the docker config provided.
  - Preferably a virtual environment (conda/venv)
- - A CAS pdf file from [CAMS](https://new.camsonline.com/Investors/Statements/Consolidated-Account-Statement)/[KARVY]((https://mfs.kfintech.com/investor/General/ConsolidatedAccountStatement)
+ - A CAS pdf file from [CAMS](https://new.camsonline.com/Investors/Statements/Consolidated-Account-Statement)/[KARVY](https://mfs.kfintech.com/investor/General/ConsolidatedAccountStatement)
 
 ## Installation
  - Clone and install requirements
