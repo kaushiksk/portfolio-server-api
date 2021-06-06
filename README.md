@@ -7,7 +7,7 @@
 Self hosted Web API to query your portfolio data
 
 ## Pre-requisites
- - Local installation of mongodb. 
+ - Local installation of mongodb.
    - Run `docker-compose up -d` to create one using the docker config provided.
  - Preferably a virtual environment (conda/venv)
  - A CAS pdf file from [CAMS](https://new.camsonline.com/Investors/Statements/Consolidated-Account-Statement)/[KARVY](https://mfs.kfintech.com/investor/General/ConsolidatedAccountStatement)
@@ -25,7 +25,7 @@ Self hosted Web API to query your portfolio data
  ```
  - Run the server
  ```bash
- $ python manage.py run 
+ $ python manage.py run
  $ # or
  $ uvicorn portfolioserver:create_app
  ```
@@ -44,4 +44,3 @@ $ pre-commit install
 ```bash
 $ pytest -v
 ```
-
