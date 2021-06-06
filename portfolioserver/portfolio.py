@@ -1,34 +1,26 @@
-from fastapi import APIRouter, Request
+from fastapi import APIRouter, Body
 from .db import get_db
 
 router = APIRouter(prefix="/portfolio", tags=["portfolio"])
 
 
-@router.get("/goals/")
+@router.get("/goals/", status_code=200)
 def goals():
     _db = get_db()
     user_goals = _db.user_info.find_one(projection={"goals": 1})
-    return user_goals, 200
+    return user_goals
 
 
-@router.post("/goals/addgoal")
-def addgoal(request: Request):
-    data = request.get_json()
-    goal = data.get("goal", None)
-
+@router.post("/goals/addgoal", status_code=201)
+def addgoal(goal: str = Body(...)):
     if goal is not None:
         _db = get_db()
         _db.user_info.update_one({"_id": 1}, {"$addToSet": {"goals": goal}})
-        return {"isSuccess": True}, 200
-
-    return {"error": "Json payloZad needs key 'goal'"}, 400
+        return {"isSuccess": True}
 
 
 @router.post("/goals/removegoal")
-def removegoal(request: Request):
-    data = request.get_json()
-    goal = data.get("goal", None)
-
+def removegoal(goal: str = Body(...)):
     if goal is not None:
         _db = get_db()
 
@@ -40,12 +32,10 @@ def removegoal(request: Request):
             if schemes_with_goal == 0:
                 d = _db.user_info.update_one({"_id": 1}, {"$pull": {"goals": goal}})
                 print(d.modified_count)
-                return {"isSuccess": True}, 200
+                return {"isSuccess": True}
 
             return {
                 "error": "Cannot remove goal. There are schemes which have this goal assigned."
-            }, 500
+            }
 
-        return {"error": "Cannot remove goal. Goal does not exist."}, 500
-
-    return {"error": "Json payload needs key 'goal'"}, 400
+        return {"error": "Cannot remove goal. Goal does not exist."}

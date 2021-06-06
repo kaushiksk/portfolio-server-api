@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Request
+from fastapi import APIRouter, Body
 from .db import get_db
 
 router = APIRouter(prefix="/schemes", tags=["schemes"])
@@ -21,22 +21,20 @@ def scheme_details(amfi_id: str):
 
 
 @router.post("/{amfi_id}/assigngoal")
-def assigngoal(amfi_id: str, request: Request):
+async def assigngoal(amfi_id: str, goal: str = Body(...)):
     _db = get_db()
-    _db.schemes.find_one_or_404({"amfi": amfi_id})
+    is_valid_scheme = _db.schemes.count_documents({"amfi": amfi_id})
 
-    data = request.get_json()
-    goal = data.get("goal", None)
+    if not is_valid_scheme:
+        return {"error": "Invalid Scheme"}
 
     if goal is not None:
         is_valid_goal = _db.user_info.count_documents({"goals": goal})
 
         if is_valid_goal:
             _db.schemes.update_one({"amfi": amfi_id}, {"$set": {"goal": goal}})
-            return {"isSuccess": True}, 200
+            return {"isSuccess": True}
 
-        return {
-            "error": "Provided goal is not part of user's goals. Add it first."
-        }, 400
+        return {"error": "Provided goal is not part of user's goals. Add it first."}
 
-    return {"error": "Json payload needs key 'goal'"}, 400
+    return {"error": "Json payload needs key 'goal'"}
