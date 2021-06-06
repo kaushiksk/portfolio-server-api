@@ -7,8 +7,16 @@ import cutie
 import os
 import sys
 
-config = DevelopmentConfig()
-mongo = MongoClient(config.MONGO_URI, type_registry=get_type_registry())
+
+def get_mongo_client(config=None):
+    if config is None:
+        config = DevelopmentConfig()
+
+    mongo = MongoClient(config.MONGO_URI, type_registry=get_type_registry())
+    return mongo
+
+
+mongo = get_mongo_client()
 
 
 def get_db():
