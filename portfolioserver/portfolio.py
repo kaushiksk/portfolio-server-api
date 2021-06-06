@@ -1,29 +1,25 @@
-from fastapi import APIRouter, Body
+from fastapi import APIRouter, Body, Depends
 from .db import get_db
 
 router = APIRouter(prefix="/portfolio", tags=["portfolio"])
 
 
 @router.get("/goals/", status_code=200)
-def goals():
-    _db = get_db()
+def goals(_db=Depends(get_db)):
     user_goals = _db.user_info.find_one(projection={"goals": 1})
     return user_goals
 
 
 @router.post("/goals/addgoal", status_code=201)
-def addgoal(goal: str = Body(...)):
+def addgoal(goal: str = Body(...), _db=Depends(get_db)):
     if goal is not None:
-        _db = get_db()
         _db.user_info.update_one({"_id": 1}, {"$addToSet": {"goals": goal}})
         return {"isSuccess": True}
 
 
 @router.post("/goals/removegoal")
-def removegoal(goal: str = Body(...)):
+def removegoal(goal: str = Body(...), _db=Depends(get_db)):
     if goal is not None:
-        _db = get_db()
-
         is_valid_goal = _db.user_info.count_documents({"goals": goal})
 
         if is_valid_goal:
