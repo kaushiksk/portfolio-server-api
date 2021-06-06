@@ -1,18 +1,18 @@
-from flask import Blueprint, request
+from fastapi import APIRouter, Request
 from .db import get_db
 
-bp = Blueprint("portfolio", __name__, url_prefix="/portfolio")
+router = APIRouter(prefix="/portfolio", tags=["portfolio"])
 
 
-@bp.route("/goals/", methods=["GET"])
+@router.get("/goals/")
 def goals():
     _db = get_db()
     user_goals = _db.user_info.find_one(projection={"goals": 1})
     return user_goals, 200
 
 
-@bp.route("/goals/addgoal", methods=["POST"])
-def addgoal():
+@router.post("/goals/addgoal")
+def addgoal(request: Request):
     data = request.get_json()
     goal = data.get("goal", None)
 
@@ -21,11 +21,11 @@ def addgoal():
         _db.user_info.update_one({"_id": 1}, {"$addToSet": {"goals": goal}})
         return {"isSuccess": True}, 200
 
-    return {"error": "Json payload needs key 'goal'"}, 400
+    return {"error": "Json payloZad needs key 'goal'"}, 400
 
 
-@bp.route("/goals/removegoal", methods=["POST"])
-def removegoal():
+@router.post("/goals/removegoal")
+def removegoal(request: Request):
     data = request.get_json()
     goal = data.get("goal", None)
 

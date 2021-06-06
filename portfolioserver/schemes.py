@@ -1,10 +1,10 @@
-from flask import Blueprint, request
+from fastapi import APIRouter, Request
 from .db import get_db
 
-bp = Blueprint("schemes", __name__, url_prefix="/schemes")
+router = APIRouter(prefix="/schemes", tags=["schemes"])
 
 
-@bp.route("/overview/", methods=["GET"])
+@router.get("/overview/")
 def overview():
     _db = get_db()
     _schemes = _db.schemes.find(projection={"_id": False, "transactions": False})
@@ -13,15 +13,15 @@ def overview():
     return data, 200
 
 
-@bp.route("/<amfi_id>", methods=["GET"])
-def scheme_details(amfi_id):
+@router.get("/{amfi_id}")
+def scheme_details(amfi_id: str):
     _db = get_db()
     data = _db.schemes.find_one_or_404({"amfi": amfi_id}, projection={"_id": False})
     return data, 200
 
 
-@bp.route("/<amfi_id>/assigngoal", methods=["POST"])
-def assigngoal(amfi_id):
+@router.post("/{amfi_id}/assigngoal")
+def assigngoal(amfi_id: str, request: Request):
     _db = get_db()
     _db.schemes.find_one_or_404({"amfi": amfi_id})
 
