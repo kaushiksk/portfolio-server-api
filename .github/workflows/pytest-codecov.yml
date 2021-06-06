@@ -28,7 +28,7 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Generate Report
       run: |
-        export LC_ALL=C
+        export LC_NUMERIC="en_US.UTF-8"
         sudo dpkg-reconfigure locales
         git submodule update --init --recursive
         pip install -r requirements.txt
