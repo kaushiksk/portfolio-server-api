@@ -14,7 +14,7 @@ Self hosted Web API to query your portfolio data
 ## Installation
  - Clone and install requirements
  ```bash
- $ git clone --recurse-submodules https://github.com/kaushiksk/portfolio-server-api/ 
+ $ git clone --recurse-submodules https://github.com/kaushiksk/portfolio-server-api/
  $ cd portfolio-server-api
  $ docker-compose up -d # Optional if you want to install mongodb the docker way
  $ pip install -r requirements.txt
