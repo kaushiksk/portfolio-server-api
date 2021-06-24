@@ -50,6 +50,10 @@ class SchemeWithTransactions(Scheme):
     transactions: List[Transaction]
 
 
+class GoalResponse(BaseModel):
+    goals: List[str]
+
+
 class UserInfo(BaseModel):
     name: str
     email: str
