@@ -5,9 +5,12 @@ from .errors import CANNOT_REMOVE_GOAL_EXISTS_IN_SCHEMA, CANNOT_REMOVE_GOAL_NOT_
 
 router = APIRouter(prefix="/portfolio", tags=["portfolio"])
 
+
 @router.get("/overview", response_model=Portfolio)
 def overview(_db=Depends(get_db)):
-    _schemes = [s for s in _db.schemes.find(projection={"_id": False, "transactions": False})]
+    _schemes = [
+        s for s in _db.schemes.find(projection={"_id": False, "transactions": False})
+    ]
     user_info = _db.user_info.find_one({}, projection={"_id": False})
     return Portfolio(user_info=user_info, schemes=_schemes)
 

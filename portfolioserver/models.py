@@ -6,18 +6,22 @@ import locale
 
 locale.setlocale(locale.LC_NUMERIC, "en_IN")
 
+
 class BaseModel(PydanticBaseModel):
     class Config:
         json_encoders = {
             Decimal: lambda x: locale.format_string("%.4f", x, grouping=True)
         }
 
+
 class GenericPostResponse(BaseModel):
     isSuccess: Optional[bool] = False
     error: Optional[str] = None
 
+
 class GoalRequest(BaseModel):
     name: str
+
 
 class Transaction(BaseModel):
     date: date
@@ -30,6 +34,7 @@ class Transaction(BaseModel):
     dividend_rate: Union[Decimal, None]
     Days: int
 
+
 class Scheme(BaseModel):
     amfi: str
     name: str
@@ -40,8 +45,10 @@ class Scheme(BaseModel):
     subtype: str
     goal: str
 
+
 class SchemeWithTransactions(Scheme):
     transactions: List[Transaction]
+
 
 class UserInfo(BaseModel):
     name: str
@@ -50,6 +57,7 @@ class UserInfo(BaseModel):
     mobile: str
     valuation: Decimal
     goals: List[str]
+
 
 class Portfolio(BaseModel):
     user_info: UserInfo
