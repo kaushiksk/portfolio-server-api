@@ -1,19 +1,11 @@
 from fastapi import APIRouter, Depends, HTTPException
 from .db import get_db
-from .models import GoalRequest, GenericPostResponse, SchemeWithTransactions, Portfolio
+from .models import GoalRequest, GenericPostResponse, SchemeWithTransactions
 from .errors import INVALID_SCHEME, GOAL_NOT_FOUND
 
 router = APIRouter(prefix="/schemes", tags=["schemes"])
 
-
-@router.get("/overview", response_model=Portfolio)
-def overview(_db=Depends(get_db)):
-    _schemes = [s for s in _db.schemes.find(projection={"_id": False, "transactions": False})]
-    user_info = _db.user_info.find_one({}, projection={"_id": False})
-    return Portfolio(user_info=user_info, schemes=_schemes)
-
-
-@router.get("/{amfi_id}", response_model=SchemeWithTransactions)
+@router.get("/{amfi_id}/details", response_model=SchemeWithTransactions)
 def scheme_details(amfi_id: str, _db=Depends(get_db)):
     data = _db.schemes.find_one({"amfi": amfi_id}, projection={"_id": False})
     if not data:
