@@ -2,10 +2,7 @@ from pymongo import MongoClient
 from pyportfolio import Portfolio
 from .configs import DevelopmentConfig
 from .codec_options import get_type_registry
-import click
 import cutie
-import os
-import sys
 
 
 def get_mongo_client(config=None):
