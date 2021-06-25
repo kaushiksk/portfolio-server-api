@@ -32,7 +32,7 @@ class Transaction(BaseModel):
     balance: Union[Decimal, None]
     type: str
     dividend_rate: Union[Decimal, None]
-    Days: int
+    days: int
 
 
 class Scheme(BaseModel):
