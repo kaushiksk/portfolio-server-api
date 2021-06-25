@@ -1,4 +1,5 @@
 import json
+import tempfile
 from .models import GoalsExport
 from pydantic import ValidationError
 
@@ -32,3 +33,9 @@ def get_goals_data_from_file(goals_file):
             return None
 
     return None
+
+
+def create_export_file(output_data):
+    with tempfile.NamedTemporaryFile("w", delete=False) as file:
+        file.write(output_data)
+        return file.name
