@@ -1,4 +1,5 @@
 from pymongo import MongoClient
+from pymongo.database import Database
 from pyportfolio import Portfolio
 from portfolioserver.configs import DevelopmentConfig
 from portfolioserver.codec_options import get_type_registry
@@ -20,7 +21,7 @@ def get_mongo_client(config=None):
 mongo = get_mongo_client()
 
 
-def get_db():
+def get_db() -> Database:
     return mongo.get_default_database()
 
 
