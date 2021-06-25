@@ -2,16 +2,20 @@ from datetime import date
 from typing import Optional, List, Union
 from pydantic import BaseModel as PydanticBaseModel
 from decimal import Decimal
-import locale
+from fastapi.encoders import jsonable_encoder
 
-locale.setlocale(locale.LC_NUMERIC, "en_IN")
+
+def decimal_encoder(number: Decimal):
+    """We want to round the decimal to 4 decimal places
+    and return the value with default encoding used by FastAPI
+    """
+    rounded_number = number.quantize(Decimal(".0001"))
+    return jsonable_encoder(rounded_number)
 
 
 class BaseModel(PydanticBaseModel):
     class Config:
-        json_encoders = {
-            Decimal: lambda x: locale.format_string("%.4f", x, grouping=True)
-        }
+        json_encoders = {Decimal: decimal_encoder}
 
 
 class GenericPostResponse(BaseModel):
