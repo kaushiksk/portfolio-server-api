@@ -56,11 +56,9 @@ def export_goals(_db=Depends(get_db)):
     output_data["schemes"] = [s for s in scheme_goals]
 
     import json
-
-    output_json = json.dumps(output_data, indent=4)
-
     import tempfile
 
+    output_json = json.dumps(output_data, indent=4)
     with tempfile.NamedTemporaryFile("w", delete=False) as file:
         file.write(output_json)
         return FileResponse(
