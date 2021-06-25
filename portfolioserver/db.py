@@ -1,3 +1,4 @@
+from portfolioserver.utils import import_goals
 from pymongo import MongoClient
 from pyportfolio import Portfolio
 from .configs import DevelopmentConfig
@@ -5,9 +6,12 @@ from .codec_options import get_type_registry
 import cutie
 
 
+app_config = DevelopmentConfig()
+
+
 def get_mongo_client(config=None):
     if config is None:
-        config = DevelopmentConfig()
+        config = app_config
 
     mongo = MongoClient(config.MONGO_URI, type_registry=get_type_registry())
     return mongo
@@ -20,7 +24,7 @@ def get_db():
     return mongo.get_default_database()
 
 
-def init_db_from_cas_file(cas_file_path):
+def init_db_from_cas_file(cas_file_path, goals_file=None):
     password = cutie.secure_input("Please enter the pdf password:")
     p = Portfolio(cas_file_path, password)
     data = p.to_json()
@@ -33,10 +37,10 @@ def init_db_from_cas_file(cas_file_path):
     data["user_info"]["valuation"] = data["valuation"]
     data["user_info"]["_id"] = 1
 
-    # TODO: Allow user to import goals
-    data["user_info"]["goals"] = ["MISC"]
+    goals, scheme_mapping = import_goals(goals_file, app_config.DEFAULT_GOAL)
+    data["user_info"]["goals"] = goals
     for scheme in data["schemes"]:
-        scheme["goal"] = "MISC"
+        scheme["goal"] = scheme_mapping.get(scheme["amfi"], app_config.DEFAULT_GOAL)
 
     db.user_info.insert_one(data["user_info"])
     db.schemes.insert_many(data["schemes"])
