@@ -1,4 +1,6 @@
 import json
+from portfolioserver.models import GoalsExport
+from pydantic import ValidationError
 
 
 def import_goals(goals_file, default_goal):
@@ -8,10 +10,14 @@ def import_goals(goals_file, default_goal):
     goals_data = get_goals_data_from_file(goals_file)
 
     if goals_data:
-        goals |= set(goals_data["goals"])
+        try:
+            goals_data = GoalsExport(**goals_data)
+            goals |= set(goals_data.goals)
 
-        for scheme in goals_data["schemes"]:
-            scheme_mapping[scheme["amfi"]] = scheme["goal"]
+            for scheme in goals_data.schemes:
+                scheme_mapping[scheme.amfi] = scheme.goal
+        except ValidationError:
+            print("Json object failed type validation")
 
     return list(goals), scheme_mapping
 

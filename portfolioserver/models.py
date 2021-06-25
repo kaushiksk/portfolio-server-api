@@ -66,3 +66,13 @@ class UserInfo(BaseModel):
 class Portfolio(BaseModel):
     user_info: UserInfo
     schemes: List[Scheme]
+
+
+class SchemeGoal(BaseModel):
+    amfi: str
+    goal: str
+
+
+class GoalsExport(BaseModel):
+    goals: List[str]
+    schemes: List[SchemeGoal]
