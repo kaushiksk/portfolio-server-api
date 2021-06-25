@@ -1,8 +1,8 @@
-from portfolioserver.utils import import_goals
 from pymongo import MongoClient
 from pyportfolio import Portfolio
 from .configs import DevelopmentConfig
 from .codec_options import get_type_registry
+from .utils import import_goals
 import cutie
 
 

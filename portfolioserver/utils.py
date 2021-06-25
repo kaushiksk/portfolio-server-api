@@ -1,5 +1,5 @@
 import json
-from portfolioserver.models import GoalsExport
+from .models import GoalsExport
 from pydantic import ValidationError
 
 
