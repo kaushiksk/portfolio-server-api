@@ -8,6 +8,7 @@ Self hosted Web API to query your portfolio data
 
 ## Pre-requisites
  - Local installation of mongodb.
+    - The repo comes with a docker-compose.yml file to help setup mongo. Simply run `docker-compose up -d` in repo root.
  - Preferably a virtual environment (conda/venv)
  - A CAS pdf file from [CAMS](https://new.camsonline.com/Investors/Statements/Consolidated-Account-Statement)/[KARVY](https://mfs.kfintech.com/investor/General/ConsolidatedAccountStatement)
 
@@ -16,7 +17,6 @@ Self hosted Web API to query your portfolio data
  ```bash
  $ git clone --recurse-submodules https://github.com/kaushiksk/portfolio-server-api/
  $ cd portfolio-server-api
- $ docker-compose up -d # Optional if you want to install mongodb the docker way
  $ pip install -r requirements.txt
  ```
  - Copy and paste your CAS file as `cas-portfolio.pdf` under `portfolio-server-api/`
@@ -45,4 +45,3 @@ $ pre-commit install
 ```bash
 $ pytest -v
 ```
-
