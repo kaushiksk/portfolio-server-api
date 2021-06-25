@@ -33,9 +33,6 @@ jobs:
         mongodb-version: ${{ matrix.mongodb-version }}
     - name: Install Dependencies
       run: |
-        sudo locale-gen en_IN.UTF-8
-        export LC_ALL="en_IN"
-        sudo dpkg-reconfigure locales
         git submodule update --init --recursive
         pip install -r requirements.txt
         pip install pytest coverage
