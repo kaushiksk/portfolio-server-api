@@ -5,6 +5,7 @@ import os
 import sys
 
 CAS_FILE_PATH = "./cas-portfolio.pdf"
+GOALS_FILE_PATH = "./goals.json"
 
 
 @click.group()
@@ -20,7 +21,11 @@ def init_db_command():
         )
         sys.exit(0)
 
-    init_db_from_cas_file(CAS_FILE_PATH)
+    goals_file = None
+    if os.path.exists(GOALS_FILE_PATH):
+        goals_file = GOALS_FILE_PATH
+
+    init_db_from_cas_file(CAS_FILE_PATH, goals_file)
 
 
 @cli.command("run")
