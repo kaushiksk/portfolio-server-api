@@ -1,6 +1,9 @@
 # CAS file used by the server
 cas-portfolio.pdf
 
+# Goals file used by server
+goals.json
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
