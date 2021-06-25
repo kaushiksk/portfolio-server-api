@@ -7,16 +7,17 @@
 Self hosted Web API to query your portfolio data
 
 ## Pre-requisites
- - Local installation of mongodb. 
-   - Run `docker-compose up -d` to create one using the docker config provided.
+ - Local installation of mongodb.
  - Preferably a virtual environment (conda/venv)
  - A CAS pdf file from [CAMS](https://new.camsonline.com/Investors/Statements/Consolidated-Account-Statement)/[KARVY](https://mfs.kfintech.com/investor/General/ConsolidatedAccountStatement)
 
 ## Installation
  - Clone and install requirements
  ```bash
- $ git clone --recurse-submodules https://github.com/kaushiksk/portfolio-server-api/ && cd portfolio-server-api
- $ pip install -r requirements.txt # Preferably inside your venv
+ $ git clone --recurse-submodules https://github.com/kaushiksk/portfolio-server-api/
+ $ cd portfolio-server-api
+ $ docker-compose up -d # Optional if you want to install mongodb the docker way
+ $ pip install -r requirements.txt
  ```
  - Copy and paste your CAS file as `cas-portfolio.pdf` under `portfolio-server-api/`
  - Initialize the db with your data
@@ -25,7 +26,7 @@ Self hosted Web API to query your portfolio data
  ```
  - Run the server
  ```bash
- $ python manage.py run 
+ $ python manage.py run
  $ # or
  $ uvicorn portfolioserver:create_app
  ```
