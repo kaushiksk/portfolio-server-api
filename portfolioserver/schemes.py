@@ -17,11 +17,16 @@ def scheme_details(amfi_id: str, db=Depends(get_db)):
 
 
 @router.post("/{amfi_id}/assigngoal", response_model=GenericPostResponse)
-async def assign_goal(amfi_id: str, goal: GoalRequest, db=Depends(get_db)):
+def assign_goal(amfi_id: str, goal: GoalRequest, db=Depends(get_db)):
+    response = GenericPostResponse()
+
     if is_valid_goal(db, goal.name):
         result = set_scheme_goal(db, amfi_id, goal.name)
         if result.matched_count == 0:
-            return GenericPostResponse(error=INVALID_SCHEME)
-        return GenericPostResponse(isSuccess=True)
+            response.error = INVALID_SCHEME
+        else:
+            response.isSuccess = True
+    else:
+        response.error = GOAL_NOT_FOUND
 
-    return GenericPostResponse(error=GOAL_NOT_FOUND)
+    return response

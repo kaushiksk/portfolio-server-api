@@ -24,14 +24,18 @@ def add_goal(goal: GoalRequest, db=Depends(get_db)):
 
 @router.post("/removegoal", response_model=GenericPostResponse)
 def remove_goal(goal: GoalRequest, db=Depends(get_db)):
+    response = GenericPostResponse()
+
     if is_valid_goal(db, goal.name):
         removed = remove_user_goal(db, goal.name)
         if removed:
-            return GenericPostResponse(isSuccess=True)
+            response.isSuccess = True
+        else:
+            response.error = CANNOT_REMOVE_GOAL_EXISTS_IN_SCHEMA
+    else:
+        response.error = CANNOT_REMOVE_GOAL_NOT_FOUND
 
-        return GenericPostResponse(error=CANNOT_REMOVE_GOAL_EXISTS_IN_SCHEMA)
-
-    return GenericPostResponse(error=CANNOT_REMOVE_GOAL_NOT_FOUND)
+    return response
 
 
 @router.get("/export", response_model=GoalsExport)
