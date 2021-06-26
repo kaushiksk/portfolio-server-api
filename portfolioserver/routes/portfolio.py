@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends
-from .db import get_db
-from .models import Portfolio
-from .db.utils import get_all_schemes, get_user_info
+from portfolioserver.db import get_db
+from portfolioserver.models import Portfolio
+from portfolioserver.db.utils import get_all_schemes, get_user_info
 
 router = APIRouter(prefix="/portfolio", tags=["portfolio"])
 

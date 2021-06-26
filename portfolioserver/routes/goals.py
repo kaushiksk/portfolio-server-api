@@ -1,11 +1,19 @@
 from fastapi import APIRouter, Depends
 from fastapi.responses import FileResponse
-from .db import get_db
-from .models import GoalRequest, GenericPostResponse, GoalResponse, GoalsExport
-from .errors import CANNOT_REMOVE_GOAL_EXISTS_IN_SCHEMA, CANNOT_REMOVE_GOAL_NOT_FOUND
-from .db.crud import add_user_goal, remove_user_goal
-from .db.utils import get_user_goals, is_valid_goal, get_all_schemes
-from .utils import create_export_file
+from portfolioserver.db import get_db
+from portfolioserver.models import (
+    GoalRequest,
+    GenericPostResponse,
+    GoalResponse,
+    GoalsExport,
+)
+from portfolioserver.errors import (
+    CANNOT_REMOVE_GOAL_EXISTS_IN_SCHEMA,
+    CANNOT_REMOVE_GOAL_NOT_FOUND,
+)
+from portfolioserver.db.crud import add_user_goal, remove_user_goal
+from portfolioserver.db.utils import get_user_goals, is_valid_goal, get_all_schemes
+from portfolioserver.utils import create_export_file
 
 router = APIRouter(prefix="/goals", tags=["goals"])
 
