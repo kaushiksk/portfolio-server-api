@@ -1,9 +1,13 @@
 from fastapi import APIRouter, Depends, HTTPException
-from .db import get_db
-from .models import GoalRequest, GenericPostResponse, SchemeWithTransactions
-from .errors import INVALID_SCHEME, GOAL_NOT_FOUND
-from .db.utils import get_scheme, is_valid_goal
-from .db.crud import set_scheme_goal
+from portfolioserver.db import get_db
+from portfolioserver.models import (
+    GoalRequest,
+    GenericPostResponse,
+    SchemeWithTransactions,
+)
+from portfolioserver.errors import INVALID_SCHEME, GOAL_NOT_FOUND
+from portfolioserver.db.utils import get_scheme, is_valid_goal
+from portfolioserver.db.crud import set_scheme_goal
 
 router = APIRouter(prefix="/schemes", tags=["schemes"])
 

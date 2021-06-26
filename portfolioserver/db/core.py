@@ -2,7 +2,7 @@ from pymongo import MongoClient
 from pymongo.database import Database
 from pyportfolio import Portfolio
 from portfolioserver.configs import DevelopmentConfig
-from portfolioserver.codec_options import get_type_registry
+from .codec_options import get_type_registry
 from portfolioserver.utils import import_goals
 import cutie
 
