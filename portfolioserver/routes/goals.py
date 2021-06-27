@@ -1,3 +1,5 @@
+from typing import Optional
+from portfolioserver.db.analytics import get_goals_stats
 from fastapi import APIRouter, Depends
 from fastapi.responses import FileResponse
 from portfolioserver.db import get_db
@@ -57,3 +59,8 @@ def export_goals(db=Depends(get_db)):
     return FileResponse(
         export_file, media_type="application/json", filename="goals.json"
     )
+
+
+@router.get("/stats")
+def goals_stats(goal: Optional[str] = None, db=Depends(get_db)):
+    return get_goals_stats(db, goal)
