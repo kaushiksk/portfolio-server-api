@@ -15,8 +15,7 @@ Self hosted Web API to query your portfolio data
 ## Installation
  - Clone and install requirements
  ```bash
- $ git clone --recurse-submodules https://github.com/kaushiksk/portfolio-server-api/
- $ cd portfolio-server-api
+ $ git clone https://github.com/kaushiksk/portfolio-server-api/ && cd portfolio-server-api
  $ pip install -r requirements.txt
  ```
  - Copy and paste your CAS file as `cas-portfolio.pdf` under `portfolio-server-api/`
