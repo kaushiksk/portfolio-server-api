@@ -28,7 +28,7 @@ def get_db() -> Database:
 def init_db_from_cas_file(cas_file_path, goals_file=None):
     password = cutie.secure_input("Please enter the pdf password:")
     p = Portfolio(cas_file_path, password)
-    data = p.to_json()
+    data = p.to_dict()
 
     data["user_info"]["valuation"] = data["valuation"]
     data["user_info"]["_id"] = 1
