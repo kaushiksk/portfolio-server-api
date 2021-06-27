@@ -1,6 +1,5 @@
 from portfolioserver.db import init_db_from_cas_file
 import click
-import cutie
 import os
 import sys
 
