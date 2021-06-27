@@ -25,11 +25,12 @@ def assign_goal(amfi_id: str, goal: GoalRequest, db=Depends(get_db)):
     response = GenericPostResponse()
 
     if is_valid_goal(db, goal.name):
-        result = set_scheme_goal(db, amfi_id, goal.name)
-        if result.matched_count == 0:
-            response.error = INVALID_SCHEME
-        else:
+        updated = set_scheme_goal(db, amfi_id, goal.name)
+        if updated:
             response.isSuccess = True
+        else:
+            response.error = INVALID_SCHEME
+
     else:
         response.error = GOAL_NOT_FOUND
 
