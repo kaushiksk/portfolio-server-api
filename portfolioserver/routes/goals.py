@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import List, Optional
 from portfolioserver.db.analytics import get_goals_stats
 from fastapi import APIRouter, Depends
 from fastapi.responses import FileResponse
@@ -7,6 +7,7 @@ from portfolioserver.models import (
     GoalRequest,
     GenericPostResponse,
     GoalResponse,
+    GoalAggregation,
     GoalsExport,
 )
 from portfolioserver.errors import (
@@ -61,6 +62,6 @@ def export_goals(db=Depends(get_db)):
     )
 
 
-@router.get("/stats")
+@router.get("/stats", response_model=List[GoalAggregation])
 def goals_stats(goal: Optional[str] = None, db=Depends(get_db)):
     return get_goals_stats(db, goal)
