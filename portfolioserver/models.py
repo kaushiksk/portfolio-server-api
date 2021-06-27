@@ -80,3 +80,32 @@ class SchemeGoal(BaseModel):
 class GoalsExport(BaseModel):
     goals: List[str]
     schemes: List[SchemeGoal]
+
+
+class BaseAggregation(BaseModel):
+    scheme_count: int
+    valuation: Decimal
+
+
+class SchemeName(BaseModel):
+    amfi: str
+    name: str
+
+
+class SchemeSubTypeAggregation(BaseAggregation):
+    subtype: str
+    schemes: List[SchemeName]
+
+
+class SchemeTypeAggregation(BaseAggregation):
+    type: str
+    subtypes: List[SchemeSubTypeAggregation]
+
+
+class GoalStats(BaseAggregation):
+    scheme_types: List[SchemeTypeAggregation]
+
+
+class GoalAggregation(BaseModel):
+    goal: str
+    stats: GoalStats

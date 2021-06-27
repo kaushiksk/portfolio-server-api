@@ -1,18 +1,22 @@
+from typing import List, Optional
 from fastapi import APIRouter, Depends
 from fastapi.responses import FileResponse
-from portfolioserver.db import get_db
+
 from portfolioserver.models import (
     GoalRequest,
     GenericPostResponse,
     GoalResponse,
+    GoalAggregation,
     GoalsExport,
 )
 from portfolioserver.errors import (
     CANNOT_REMOVE_GOAL_EXISTS_IN_SCHEMA,
     CANNOT_REMOVE_GOAL_NOT_FOUND,
 )
+from portfolioserver.db import get_db
 from portfolioserver.db.crud import add_user_goal, remove_user_goal
 from portfolioserver.db.utils import get_user_goals, is_valid_goal, get_all_schemes
+from portfolioserver.db.analytics import get_goals_stats
 from portfolioserver.utils import create_export_file
 
 router = APIRouter(prefix="/goals", tags=["goals"])
@@ -57,3 +61,8 @@ def export_goals(db=Depends(get_db)):
     return FileResponse(
         export_file, media_type="application/json", filename="goals.json"
     )
+
+
+@router.get("/stats", response_model=List[GoalAggregation])
+def goals_stats(goal: Optional[str] = None, db=Depends(get_db)):
+    return get_goals_stats(db, goal)
