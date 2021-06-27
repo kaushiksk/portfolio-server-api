@@ -30,11 +30,6 @@ def init_db_from_cas_file(cas_file_path, goals_file=None):
     p = Portfolio(cas_file_path, password)
     data = p.to_json()
 
-    db = get_db()
-
-    db.user_info.drop()
-    db.schemes.drop()
-
     data["user_info"]["valuation"] = data["valuation"]
     data["user_info"]["_id"] = 1
 
@@ -42,6 +37,10 @@ def init_db_from_cas_file(cas_file_path, goals_file=None):
     data["user_info"]["goals"] = goals
     for scheme in data["schemes"]:
         scheme["goal"] = scheme_mapping.get(scheme["amfi"], app_config.DEFAULT_GOAL)
+
+    db = get_db()
+    db.user_info.drop()
+    db.schemes.drop()
 
     db.user_info.insert_one(data["user_info"])
     db.schemes.insert_many(data["schemes"])
