@@ -6,7 +6,6 @@ from .codec_options import get_type_registry
 from portfolioserver.utils import import_goals
 import cutie
 
-
 app_config = DevelopmentConfig()
 
 
