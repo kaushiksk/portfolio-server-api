@@ -1,6 +1,5 @@
 from .core import Database
 
-
 DEFAULT_PROJECTION = {"_id": False}
 
 
